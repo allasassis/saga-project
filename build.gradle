@@ -1,0 +1,67 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.6'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.study'
+version = '0.0.1-SNAPSHOT'
+description = 'Demo project for Spring Boot'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(25)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // --- Core Spring ---
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.postgresql:postgresql'
+
+    // --- Messaging (choose one) ---
+    // Kafka
+    implementation 'org.springframework.kafka:spring-kafka'
+    // OR RabbitMQ
+    // implementation 'org.springframework.boot:spring-boot-starter-amqp'
+
+    // --- JSON + Outbox serialization ---
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+    // --- Resilience ---
+    implementation 'io.github.resilience4j:resilience4j-spring-boot3'
+
+    // --- Observability / Tracing ---
+    implementation 'io.micrometer:micrometer-tracing-bridge-otel'
+    implementation 'io.opentelemetry:opentelemetry-exporter-otlp'
+
+    // --- Database migrations ---
+    implementation 'org.flywaydb:flyway-core'
+
+    // --- Mapper (optional) ---
+    implementation 'org.mapstruct:mapstruct'
+    annotationProcessor 'org.mapstruct:mapstruct-processor'
+
+    // --- Testing ---
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:postgresql'
+    // choose based on broker
+    testImplementation 'org.testcontainers:kafka'
+    // OR
+    // testImplementation 'org.testcontainers:rabbitmq'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
